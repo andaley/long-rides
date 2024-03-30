@@ -1,19 +1,23 @@
-import { useState } from "react";
+import "./Trip.css";
+import type { TripData } from "./TripList";
 
-function Trip() {
-  const [dates] = useState("March 30, 2024");
-  const [title] = useState("Frog Lake Loop");
-  const [duration] = useState(0);
-  const [miles] = useState(0);
-  const [elevation] = useState(0);
+type TripProps = {
+  key: number;
+  trip: TripData;
+};
+
+function Trip(TripProps: TripProps) {
+  const { dates, title, duration, miles, elevation } = TripProps.trip || {};
 
   return (
     <>
-      <div>{dates}</div>
-      <h2>{title}</h2>
-      <div>Duration: {duration}</div>
-      <div>Miles: {miles}</div>
-      <div>Elevation: {elevation}</div>
+      <div className="trip">
+        <div>{dates}</div>
+        <h2>{title}</h2>
+        <div>Duration: {duration}</div>
+        <div>Miles: {miles}</div>
+        <div>Elevation: {elevation}</div>
+      </div>
     </>
   );
 }

@@ -1,12 +1,12 @@
 import './App.css'
-import Trip from './components/Trip'
+import TripList from './components/TripList'
 
 function App() {
 
   return (
     <>
       <h1>Trip Tracker</h1>
-      <Trip />
+      <TripList />
     </>
   )
 }
