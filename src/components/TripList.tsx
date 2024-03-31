@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Trip from "./Trip";
+import TripListHeader from "./TripListHeader";
 
 export type TripData = {
   id: number;
@@ -10,14 +11,15 @@ export type TripData = {
   elevation: number;
 };
 
-function TripList() {
+const TripList = () => {
   const [trips, setTrips] = useState<TripData[]>([]);
+  const [selectedYear, setSelectedYear] = useState<string>("2022");
 
   async function fetchTrips() {
     return [
       {
         id: 1,
-        dates: "March 30, 2024",
+        dates: "June 30, 2023",
         title: "Frog Lake Loop",
         duration: 0,
         miles: 0,
@@ -33,7 +35,7 @@ function TripList() {
       },
       {
         id: 3,
-        dates: "May 5, 2024",
+        dates: "May 5, 2022",
         title: "Mt. Hood",
         duration: 0,
         miles: 0,
@@ -46,13 +48,22 @@ function TripList() {
     fetchTrips().then(setTrips);
   }, []);
 
+  const onSelectFilter = (year: string) => {
+    setSelectedYear(year);
+  };
+
+  const filteredTrips = trips.filter((trip) =>
+    selectedYear === "all" ? true : trip.dates.includes(selectedYear)
+  ).sort((a, b) => b.dates.localeCompare(a.dates));
+
   return (
     <div>
-      {trips.map((trip) => (
+      <TripListHeader selected={selectedYear} onSelectFilter={onSelectFilter} />
+      {filteredTrips.map((trip) => (
         <Trip key={trip.id} trip={trip} />
       ))}
     </div>
   );
-}
+};
 
 export default TripList;
