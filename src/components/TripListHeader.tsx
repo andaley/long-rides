@@ -6,6 +6,8 @@ type TripHeaderProps = {
   onSelectFilter: (year: string) => void;
   sortBy: SortByProperty;
   onSortBy: (sortProperty: SortByProperty) => void;
+  sortOrder: string;
+  onSortOrder: (sortOrder: string) => void;
 };
 
 const TripListHeader = (props: TripHeaderProps) => {
@@ -15,6 +17,10 @@ const TripListHeader = (props: TripHeaderProps) => {
 
   const handleSortBy = (event: React.ChangeEvent<HTMLSelectElement>) => {
     props.onSortBy(event.target.value as SortByProperty);
+  }
+
+  const handleSortOrder = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    props.onSortOrder(event.target.value);
   }
 
   return (
@@ -34,6 +40,11 @@ const TripListHeader = (props: TripHeaderProps) => {
           <option value="duration">Duration</option>
           <option value="miles">Miles</option>
           <option value="elevation">Elevation</option>
+        </select>
+        <label>Order:</label>
+        <select value={props.sortOrder} onChange={handleSortOrder}>
+          <option value="ascending">ascending</option>
+          <option value="descending">descending</option>
         </select>
       </div>
     </div>
