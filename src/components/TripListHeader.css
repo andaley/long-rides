@@ -1,4 +1,17 @@
 .tripListHeader {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 12px;
+  }
+  
+  .tripListHeader select {
+    padding: 2px;
+  }
+  
+  .sortBy select {
+    margin-left: 4px;
+  }
+  
+  .sortBy label {
+    margin-left: 8px;
 }
