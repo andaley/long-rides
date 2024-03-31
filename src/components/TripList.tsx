@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import Trip from "./Trip";
 import TripListHeader from "./TripListHeader";
+import './TripList.css'
+import { SortByProperty } from "./consts/consts";
 
 export type TripData = {
   id: number;
-  dates: string;
+  date: string;
   title: string;
   duration: number;
   miles: number;
@@ -13,33 +15,42 @@ export type TripData = {
 
 const TripList = () => {
   const [trips, setTrips] = useState<TripData[]>([]);
-  const [selectedYear, setSelectedYear] = useState<string>("2022");
+  const [selectedYear, setSelectedYear] = useState<string>("all");
+  const [selectedSortBy, setSelectedSortBy] = useState<SortByProperty>("date");
 
   async function fetchTrips() {
     return [
       {
         id: 1,
-        dates: "June 30, 2023",
+        date: "June 30, 2023",
         title: "Frog Lake Loop",
-        duration: 0,
-        miles: 0,
-        elevation: 0,
+        duration: 1,
+        miles: 36,
+        elevation: 2500,
       },
       {
         id: 2,
-        dates: "April 15, 2024",
+        date: "April 15, 2024",
         title: "Three Sisters Wilderness",
-        duration: 0,
-        miles: 0,
-        elevation: 0,
+        duration: 3,
+        miles: 90,
+        elevation: 4700,
       },
       {
         id: 3,
-        dates: "May 5, 2022",
-        title: "Mt. Hood",
-        duration: 0,
-        miles: 0,
-        elevation: 0,
+        date: "August 16, 2023",
+        title: "Siletz River",
+        duration: 5,
+        miles: 120,
+        elevation: 3700,
+      },
+      {
+        id: 4,
+        date: "May 5, 2022",
+        title: "Fire and Ice",
+        duration: 2,
+        miles: 49,
+        elevation: 3000,
       },
     ];
   }
@@ -52,16 +63,31 @@ const TripList = () => {
     setSelectedYear(year);
   };
 
-  const filteredTrips = trips.filter((trip) =>
-    selectedYear === "all" ? true : trip.dates.includes(selectedYear)
-  ).sort((a, b) => b.dates.localeCompare(a.dates));
+  const onSelectSortBy = (sortByProperty: SortByProperty) => {
+    setSelectedSortBy(sortByProperty);
+  }
+
+  const sortTrips = (filteredTrips: TripData[]) => {
+    if (selectedSortBy === 'date') {
+      return filteredTrips.sort((a: TripData, b: TripData) => b.date.localeCompare(a.date))
+    }
+
+    return filteredTrips.sort((a: TripData, b: TripData) => a[selectedSortBy] - b[selectedSortBy])
+  }
+
+  const filteredSortedTrips = sortTrips(trips
+    .filter((trip) =>
+      selectedYear === "all" ? true : trip.date.includes(selectedYear)
+    ));
 
   return (
     <div>
-      <TripListHeader selected={selectedYear} onSelectFilter={onSelectFilter} />
-      {filteredTrips.map((trip) => (
-        <Trip key={trip.id} trip={trip} />
-      ))}
+      <TripListHeader selected={selectedYear} onSelectFilter={onSelectFilter} sortBy={selectedSortBy} onSortBy={onSelectSortBy}/>
+      <div className="tripContainer">
+        {filteredSortedTrips.map((trip) => (
+          <Trip key={trip.id} trip={trip} />
+        ))}
+      </div>
     </div>
   );
 };

@@ -1,12 +1,7 @@
-import './Map.css'
+import "./Map.css";
 
 function Map() {
-  return (
-    <div>
-      <h1>Map</h1>
-      <div className="map">Map goes here</div>
-    </div>
-  );
+  return <div className="map">Map goes here</div>;
 }
 
 export default Map;

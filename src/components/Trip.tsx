@@ -7,12 +7,12 @@ type TripProps = {
 };
 
 function Trip(TripProps: TripProps) {
-  const { dates, title, duration, miles, elevation } = TripProps.trip || {};
+  const { date, title, duration, miles, elevation } = TripProps.trip || {};
 
   return (
     <>
       <div className="trip">
-        <div>{dates}</div>
+        <div>{date}</div>
         <h2>{title}</h2>
         <div>Duration: {duration}</div>
         <div>Miles: {miles}</div>
