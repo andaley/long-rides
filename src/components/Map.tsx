@@ -1,7 +1,7 @@
-import "./Map.css";
+import Card from "./Card";
 
 function Map() {
-  return <div className="map">Map goes here</div>;
+  return <Card className="map">Map goes here</Card>;
 }
 
 export default Map;

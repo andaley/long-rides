@@ -1,4 +1,5 @@
 import "./Trip.css";
+import Card from "./Card";
 import type { TripData } from "./TripList";
 
 type TripProps = {
@@ -11,13 +12,13 @@ function Trip(TripProps: TripProps) {
 
   return (
     <>
-      <div className="trip">
+      <Card className="trip">
         <div>{date}</div>
         <h2>{title}</h2>
         <div>Duration: {duration}</div>
         <div>Miles: {miles}</div>
         <div>Elevation: {elevation}</div>
-      </div>
+      </Card>
     </>
   );
 }
