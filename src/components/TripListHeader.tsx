@@ -24,7 +24,7 @@ const TripListHeader = (props: TripHeaderProps) => {
   };
 
   return (
-    <div>
+    <>
       <h2>Trips</h2>
       <div className="tripListHeader">
         <div className="filterBy">
@@ -51,7 +51,7 @@ const TripListHeader = (props: TripHeaderProps) => {
           </select>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

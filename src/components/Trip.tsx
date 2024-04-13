@@ -7,8 +7,8 @@ type TripProps = {
   trip: TripData;
 };
 
-function Trip(TripProps: TripProps) {
-  const { date, title, duration, miles, elevation } = TripProps.trip || {};
+function Trip(props: TripProps) {
+  const { date, title, duration, miles, elevation } = props.trip || {};
 
   return (
     <>

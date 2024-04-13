@@ -51,7 +51,7 @@ const TripList = () => {
     ));
 
   return (
-    <div>
+    <>
       <TripListHeader
         selected={selectedYear}
         onSelectFilter={setSelectedYear}
@@ -61,7 +61,7 @@ const TripList = () => {
         onSortOrder={setSortOrder}
       />
       <div className="tripContainer">{tripList}</div>
-    </div>
+    </>
   );
 };
 
