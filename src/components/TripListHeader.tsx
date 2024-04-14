@@ -2,6 +2,7 @@ import "./TripListHeader.css";
 import { SortByProperty } from "./consts/consts";
 
 type TripHeaderProps = {
+  filterOptions: string[];
   selected: string;
   onSelectFilter: (year: string) => void;
   sortBy: SortByProperty;
@@ -23,6 +24,12 @@ const TripListHeader = (props: TripHeaderProps) => {
     props.onSortOrder(event.target.value);
   };
 
+  const filterOptions = props.filterOptions.map((option) => (
+    <option key={option} value={option}>
+      {option}
+    </option>
+  ));
+ 
   return (
     <>
       <h2>Trips</h2>
@@ -30,10 +37,7 @@ const TripListHeader = (props: TripHeaderProps) => {
         <div className="filterBy">
           <label>Year: </label>
           <select value={props.selected} onChange={handleFilter}>
-            <option>all</option>
-            <option>2022</option>
-            <option>2023</option>
-            <option>2024</option>
+            {filterOptions}
           </select>
         </div>
         <div className="sortBy">

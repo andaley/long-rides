@@ -2,7 +2,6 @@ import { useState, useEffect, useMemo } from "react";
 import Trip from "./Trip";
 import TripListHeader from "./TripListHeader";
 import "./TripList.css";
-import { TRIPS } from "./consts/consts";
 import type { SortByProperty } from "./consts/consts";
 
 export type TripData = {
@@ -14,19 +13,15 @@ export type TripData = {
   elevation: number;
 };
 
-const TripList = () => {
-  const [trips, setTrips] = useState<TripData[]>([]);
+type TripListProps = {
+  trips: TripData[];
+};
+
+const TripList = (props: TripListProps) => {
   const [selectedYear, setSelectedYear] = useState<string>("all");
   const [selectedSortBy, setSelectedSortBy] = useState<SortByProperty>("date");
   const [sortOrder, setSortOrder] = useState<string>("descending");
-
-  useEffect(() => {
-    function fetchTrips() {
-      const data = TRIPS;
-      setTrips(data);
-    }
-    fetchTrips();
-  }, []);
+  const { trips } = props;
 
   const filteredAndSortedTrips = useMemo(() => {
       const filteredTrips = trips.filter((trip) =>
@@ -46,6 +41,11 @@ const TripList = () => {
       });
   }, [trips, selectedYear, selectedSortBy, sortOrder]);
 
+  const filterOptions = useMemo(() => {
+    const uniqueYears = new Set(filteredAndSortedTrips.map((trip) => trip.date.slice(0, 4)));
+    return ["all", ...uniqueYears];
+  }, [filteredAndSortedTrips]);
+
   const tripList = filteredAndSortedTrips.map((trip) => (
       <Trip key={trip.id} trip={trip} />
     ));
@@ -53,6 +53,7 @@ const TripList = () => {
   return (
     <>
       <TripListHeader
+        filterOptions={filterOptions}
         selected={selectedYear}
         onSelectFilter={setSelectedYear}
         sortBy={selectedSortBy}
