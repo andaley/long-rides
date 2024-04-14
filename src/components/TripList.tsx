@@ -30,9 +30,10 @@ const TripList = (props: TripListProps) => {
 
       return filteredTrips.sort((a: TripData, b: TripData) => {
         if (selectedSortBy === "date") {
+
           return sortOrder === "descending"
-            ? a.date.localeCompare(b.date)
-            : b.date.localeCompare(a.date);
+            ? b.date.localeCompare(a.date)
+            : a.date.localeCompare(b.date);
         } else {
           return sortOrder === "descending"
             ? b[selectedSortBy] - a[selectedSortBy]
