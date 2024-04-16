@@ -1,20 +1,15 @@
 import { useState, useEffect } from "react";
-import './App.css'
-import Map from './components/Map'
-import NewTrip from './components/NewTrip'
-import TripList, { TripData } from './components/TripList'
-import { TRIPS } from "./components/consts/consts";
-
+import "./App.css";
+import Map from "./components/Map";
+import NewTrip from "./components/NewTrip";
+import TripList, { TripData } from "./components/TripList";
+import TRIPS from "./components/consts/strava.json";
 
 function App() {
   const [trips, setTrips] = useState<TripData[]>([]);
 
   useEffect(() => {
-    function fetchTrips() {
-      const data = TRIPS;
-      setTrips(data);
-    }
-    fetchTrips();
+    setTrips(TRIPS);
   }, []);
 
   const saveNewTripHandler = (newTrip: TripData) => {
@@ -30,7 +25,7 @@ function App() {
       <TripList trips={trips} />
       <NewTrip onSaveNewTrip={saveNewTripHandler} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
