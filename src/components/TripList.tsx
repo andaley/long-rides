@@ -43,12 +43,12 @@ const TripList = (props: TripListProps) => {
     });
   }, [trips, selectedYear, selectedSortBy, sortOrder]);
 
-  const filterOptions = useMemo(() => {
+  const filterOptions = (() => {
     const uniqueYears = new Set(
-      filteredAndSortedTrips.map((trip) => trip.date.slice(0, 4))
+      trips.map((trip) => trip.date.slice(0, 4))
     );
     return ["all", ...uniqueYears];
-  }, [filteredAndSortedTrips]);
+  })();
 
   const tripList = filteredAndSortedTrips.map((trip) => (
     <Trip key={trip.id} trip={trip} />
