@@ -1,14 +1,14 @@
-import "./Trip.css";
+import "./Ride.css";
 import Card from "./Card";
-import type { TripData } from "./TripList";
+import type { RideData } from "./RideList";
 
-type TripProps = {
+type RideProps = {
   key: number;
-  trip: TripData;
+  ride: RideData;
 };
 
-function Trip(props: TripProps) {
-  const { date, title, duration, miles, elevation } = props.trip || {};
+function Ride(props: RideProps) {
+  const { date, title, duration, miles, elevation } = props.ride || {};
 
   const durationHoursAndMinutes = `${Math.floor(duration / 3600)}h ${Math.floor(
     (duration % 3600) / 60
@@ -23,7 +23,7 @@ function Trip(props: TripProps) {
 
   return (
     <>
-      <Card className="trip">
+      <Card className="ride">
         <div>{formattedDate}</div>
         <h2>{title}</h2>
         <div>Duration: {durationHoursAndMinutes}</div>
@@ -34,4 +34,4 @@ function Trip(props: TripProps) {
   );
 }
 
-export default Trip;
+export default Ride;

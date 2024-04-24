@@ -1,7 +1,7 @@
-import "./TripListHeader.css";
+import "./RideListHeader.css";
 import { SortByProperty } from "./consts/consts";
 
-type TripHeaderProps = {
+type RideListHeaderProps = {
   filterOptions: string[];
   selected: string;
   onSelectFilter: (year: string) => void;
@@ -11,7 +11,7 @@ type TripHeaderProps = {
   onSortOrder: (sortOrder: string) => void;
 };
 
-const TripListHeader = (props: TripHeaderProps) => {
+const RideListHeader = (props: RideListHeaderProps) => {
   const handleFilter = (event: React.ChangeEvent<HTMLSelectElement>) => {
     props.onSelectFilter(event.target.value);
   };
@@ -32,7 +32,7 @@ const TripListHeader = (props: TripHeaderProps) => {
  
   return (
     <>
-      <div className="tripListHeader">
+      <div className="rideListHeader">
         <div className="filterBy">
           <label>Year: </label>
           <select value={props.selected} onChange={handleFilter}>
@@ -58,4 +58,4 @@ const TripListHeader = (props: TripHeaderProps) => {
   );
 };
 
-export default TripListHeader;
+export default RideListHeader;

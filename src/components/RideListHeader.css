@@ -1,10 +1,10 @@
-.tripListHeader {
+.rideListHeader {
   display: flex;
   justify-content: space-between;
   margin-bottom: 24px;
   }
   
-  .tripListHeader select {
+  .rideListHeader select {
     padding: 2px;
   }
   

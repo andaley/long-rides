@@ -1,20 +1,20 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import TripList, { TripData } from "./components/TripList";
-import TRIPS from "./components/consts/strava.json";
+import RideList, { RideData } from "./components/RideList";
+import RIDES from "./components/consts/strava.json";
 
 function App() {
-  const [trips, setTrips] = useState<TripData[]>([]);
+  const [rides, setRides] = useState<RideData[]>([]);
 
   useEffect(() => {
-    setTrips(TRIPS);
+    setRides(RIDES);
   }, []);
 
 
   return (
     <>
       <h1>Long Rides</h1>
-      <TripList trips={trips} />
+      <RideList rides={rides} />
     </>
   );
 }

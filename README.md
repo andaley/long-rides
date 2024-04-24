@@ -18,7 +18,6 @@ $ node ./src/scripts/seed-strava-data.js
 
 ## TODO
 - [ ] add styles
-- [ ] fetch trips from RideWithGPS || Strava
 - [ ] highlight route on map on ride hover 
 - [ ] recenter map and show more details on click
 - [ ] add tests

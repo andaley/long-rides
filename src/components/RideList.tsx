@@ -1,11 +1,11 @@
 import { useState, useMemo } from "react";
-import Trip from "./Trip";
-import TripListHeader from "./TripListHeader";
-import "./TripList.css";
+import Ride from "./Ride";
+import RideListHeader from "./RideListHeader";
+import "./RideList.css";
 import Map from "./Map";
 import type { SortByProperty } from "./consts/consts";
 
-export type TripData = {
+export type RideData = {
   id: number;
   date: string;
   title: string;
@@ -15,22 +15,22 @@ export type TripData = {
   map: [number, number][];
 };
 
-type TripListProps = {
-  trips: TripData[];
+type RideListProps = {
+  rides: RideData[];
 };
 
-const TripList = (props: TripListProps) => {
+const RideList = (props: RideListProps) => {
   const [selectedYear, setSelectedYear] = useState<string>("all");
   const [selectedSortBy, setSelectedSortBy] = useState<SortByProperty>("date");
   const [sortOrder, setSortOrder] = useState<string>("descending");
-  const { trips } = props;
+  const { rides } = props;
 
-  const filteredAndSortedTrips = useMemo(() => {
-    const filteredTrips = trips.filter((trip) =>
-      selectedYear === "all" ? true : trip.date.includes(selectedYear)
+  const filteredAndSortedRides = useMemo(() => {
+    const filteredRides = rides.filter((ride) =>
+      selectedYear === "all" ? true : ride.date.includes(selectedYear)
     );
 
-    return filteredTrips.sort((a: TripData, b: TripData) => {
+    return filteredRides.sort((a: RideData, b: RideData) => {
       if (selectedSortBy === "date") {
         return sortOrder === "descending"
           ? b.date.localeCompare(a.date)
@@ -41,27 +41,27 @@ const TripList = (props: TripListProps) => {
           : a[selectedSortBy] - b[selectedSortBy];
       }
     });
-  }, [trips, selectedYear, selectedSortBy, sortOrder]);
+  }, [rides, selectedYear, selectedSortBy, sortOrder]);
 
   const filterOptions = (() => {
     const uniqueYears = new Set(
-      trips.map((trip) => trip.date.slice(0, 4))
+      rides.map((ride) => ride.date.slice(0, 4))
     );
     return ["all", ...uniqueYears];
   })();
 
-  const tripList = filteredAndSortedTrips.map((trip) => (
-    <Trip key={trip.id} trip={trip} />
+  const rideList = filteredAndSortedRides.map((ride) => (
+    <Ride key={ride.id} ride={ride} />
   ));
 
   const polylines = useMemo(() => {
-    return filteredAndSortedTrips.map((trip) => trip.map);
-  }, [filteredAndSortedTrips]);
+    return filteredAndSortedRides.map((ride) => ride.map);
+  }, [filteredAndSortedRides]);
 
   return (
     <>
       <Map polylines={polylines} />
-      <TripListHeader
+      <RideListHeader
         filterOptions={filterOptions}
         selected={selectedYear}
         onSelectFilter={setSelectedYear}
@@ -70,9 +70,9 @@ const TripList = (props: TripListProps) => {
         sortOrder={sortOrder}
         onSortOrder={setSortOrder}
       />
-      <div className="tripContainer">{tripList}</div>
+      <div className="rideContainer">{rideList}</div>
     </>
   );
 };
 
-export default TripList;
+export default RideList;
