@@ -1,1 +1,11 @@
-.ride {}
+.ride {
+  transition: transform 0.3s ease;
+  background-color: #8a9675;
+  color: #1A1C18;
+}
+
+.ride--selected {
+  background-color: #8a9675;
+  transform: scale(1.3);
+  transition: transform 0.3s ease;
+}

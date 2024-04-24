@@ -1,40 +1,59 @@
-import { useMemo } from "react";
 import "./Map.css";
-import 'leaflet/dist/leaflet.css';
+import "leaflet/dist/leaflet.css";
+import { useMemo } from "react";
 import Card from "./Card";
-import { MapContainer, TileLayer, Polyline } from "react-leaflet";
-import type { LatLngExpression } from "leaflet";
+import { MapContainer, TileLayer, Polyline, useMap } from "react-leaflet";
+import type { RideData } from "./RideList";
+import type { LatLngTuple } from "leaflet";
 
+const ChangeMapView = ({ center }: { center: LatLngTuple | undefined }) => {
+  const map = useMap();
+
+  if (center) {
+    map.setView(center, map.getZoom());
+  }
+  return null;
+};
 interface MapProps {
-  polylines: LatLngExpression[][];
+  selectedRide: RideData | null;
+  filteredRides: RideData[];
 }
 
-const PDX_COORDS = [45.5051, -122.675];
-
 function Map(props: MapProps) {
-  const { polylines } = props;
+  const { filteredRides, selectedRide } = props;
+
+  const polylines = filteredRides.map((ride, i) => {
+    const isSelected = props.selectedRide?.id === ride.id;
+    const color = isSelected ? "red" : "blue";
+
+    return (
+      <Polyline key={`${i}-${color}`} positions={ride.map} color={color} />
+    );
+  });
 
   const center = useMemo(() => {
-    if (polylines.length === 0) {
+    if (filteredRides.length === 0) {
+      const PDX_COORDS = [45.5051, -122.675] as LatLngTuple;
       return PDX_COORDS;
     }
 
-    const firstPolyline = polylines[0];
-    const firstPoint = firstPolyline[0];
-    return firstPoint;
-  }, [polylines]);
+    if (selectedRide === null) {
+      const firstRideCoords = filteredRides[0].map[0];
+      return firstRideCoords;
+    }
+
+    return selectedRide?.map[0];
+  }, [selectedRide, filteredRides]);
 
   return (
     <Card className="map">
       <MapContainer center={center} zoom={10} scrollWheelZoom={false}>
+        <ChangeMapView center={center} />
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-
-        {polylines.map((line, i) => (
-          <Polyline key={i} positions={line} />
-        ))}
+        {polylines}
       </MapContainer>
     </Card>
   );

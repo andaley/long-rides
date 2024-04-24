@@ -23,6 +23,8 @@ const RideList = (props: RideListProps) => {
   const [selectedYear, setSelectedYear] = useState<string>("all");
   const [selectedSortBy, setSelectedSortBy] = useState<SortByProperty>("date");
   const [sortOrder, setSortOrder] = useState<string>("descending");
+  const [selectedRide, setSelectedRide] = useState<RideData | null>(null);
+  
   const { rides } = props;
 
   const filteredAndSortedRides = useMemo(() => {
@@ -51,16 +53,12 @@ const RideList = (props: RideListProps) => {
   })();
 
   const rideList = filteredAndSortedRides.map((ride) => (
-    <Ride key={ride.id} ride={ride} />
+    <Ride key={ride.id} ride={ride} onClick={setSelectedRide} isSelected={ride.id === selectedRide?.id} />
   ));
-
-  const polylines = useMemo(() => {
-    return filteredAndSortedRides.map((ride) => ride.map);
-  }, [filteredAndSortedRides]);
 
   return (
     <>
-      <Map polylines={polylines} />
+      <Map selectedRide={selectedRide} filteredRides={filteredAndSortedRides} />
       <RideListHeader
         filterOptions={filterOptions}
         selected={selectedYear}
