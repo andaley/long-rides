@@ -19,7 +19,7 @@ function App() {
 
   return (
     <>
-      <h1>Trip Tracker</h1>
+      <h1>Long Rides</h1>
       <TripList trips={trips} />
       <NewTrip onSaveNewTrip={saveNewTripHandler} />
     </>

@@ -32,7 +32,6 @@ const TripListHeader = (props: TripHeaderProps) => {
  
   return (
     <>
-      <h2>Trips</h2>
       <div className="tripListHeader">
         <div className="filterBy">
           <label>Year: </label>
