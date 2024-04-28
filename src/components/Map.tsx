@@ -3,6 +3,7 @@ import "leaflet/dist/leaflet.css";
 import { useMemo } from "react";
 import Card from "./Card";
 import { MapContainer, TileLayer, Polyline, useMap } from "react-leaflet";
+import { getAverageLatLng, PDX_COORDS } from "../utils/get-average-lat-lng";
 import type { RideData } from "./RideList";
 import type { LatLngTuple } from "leaflet";
 
@@ -23,26 +24,25 @@ function Map(props: MapProps) {
   const { filteredRides, selectedRide } = props;
 
   const polylines = filteredRides.map((ride, i) => {
-    const isSelected = props.selectedRide?.id === ride.id;
+    const isSelected = selectedRide?.id === ride.id;
     const color = isSelected ? "red" : "blue";
 
     return (
-      <Polyline key={`${i}-${color}`} positions={ride.map} color={color} />
+      <Polyline
+        key={`${i}-${color}`}
+        positions={ride.map}
+        color={color}
+        weight={5}
+      />
     );
   });
 
   const center = useMemo(() => {
     if (filteredRides.length === 0) {
-      const PDX_COORDS = [45.5051, -122.675] as LatLngTuple;
       return PDX_COORDS;
     }
 
-    if (selectedRide === null) {
-      const firstRideCoords = filteredRides[0].map[0];
-      return firstRideCoords;
-    }
-
-    return selectedRide?.map[0];
+    return selectedRide === null ? getAverageLatLng(filteredRides[0]) : getAverageLatLng(selectedRide);
   }, [selectedRide, filteredRides]);
 
   return (
