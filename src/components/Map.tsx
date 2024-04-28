@@ -42,7 +42,7 @@ function Map(props: MapProps) {
       return PDX_COORDS;
     }
 
-    return selectedRide === null ? getAverageLatLng(filteredRides[0]) : getAverageLatLng(selectedRide);
+    return selectedRide === null ? getAverageLatLng(filteredRides) : getAverageLatLng([selectedRide]);
   }, [selectedRide, filteredRides]);
 
   return (
