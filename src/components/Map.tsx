@@ -25,14 +25,15 @@ function Map(props: MapProps) {
 
   const polylines = filteredRides.map((ride, i) => {
     const isSelected = selectedRide?.id === ride.id;
-    const color = isSelected ? "red" : "blue";
+    const color = isSelected ? "#cf2e2e" : "#64727e";
+    const weight = isSelected ? 5 : 3;
 
     return (
       <Polyline
         key={`${i}-${color}`}
         positions={ride.map}
         color={color}
-        weight={5}
+        weight={weight}
       />
     );
   });
@@ -47,7 +48,7 @@ function Map(props: MapProps) {
 
   return (
     <Card className="map">
-      <MapContainer center={center} zoom={10} scrollWheelZoom={false}>
+      <MapContainer center={center} zoom={10.5} scrollWheelZoom={false}>
         <ChangeMapView center={center} />
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
