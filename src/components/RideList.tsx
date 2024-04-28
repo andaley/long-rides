@@ -52,6 +52,11 @@ const RideList = (props: RideListProps) => {
     return ["all", ...uniqueYears];
   })();
 
+  const handleSelectFilter = (year: string) => {
+    setSelectedYear(year);
+    setSelectedRide(null);
+  };
+
   const rideList = filteredAndSortedRides.map((ride) => (
     <Ride key={ride.id} ride={ride} onClick={setSelectedRide} isSelected={ride.id === selectedRide?.id} />
   ));
@@ -62,7 +67,7 @@ const RideList = (props: RideListProps) => {
       <RideListHeader
         filterOptions={filterOptions}
         selected={selectedYear}
-        onSelectFilter={setSelectedYear}
+        onSelectFilter={handleSelectFilter}
         sortBy={selectedSortBy}
         onSortBy={setSelectedSortBy}
         sortOrder={sortOrder}

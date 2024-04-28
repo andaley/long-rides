@@ -1,20 +1,11 @@
 import "./Map.css";
 import "leaflet/dist/leaflet.css";
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import Card from "./Card";
 import { MapContainer, TileLayer, Polyline, useMap } from "react-leaflet";
-import { getAverageLatLng, PDX_COORDS } from "../utils/get-average-lat-lng";
 import type { RideData } from "./RideList";
-import type { LatLngTuple } from "leaflet";
+import type { LatLngTuple, LatLngBoundsExpression } from "leaflet";
 
-const ChangeMapView = ({ center }: { center: LatLngTuple | undefined }) => {
-  const map = useMap();
-
-  if (center) {
-    map.setView(center, map.getZoom());
-  }
-  return null;
-};
 interface MapProps {
   selectedRide: RideData | null;
   filteredRides: RideData[];
@@ -38,18 +29,19 @@ function Map(props: MapProps) {
     );
   });
 
-  const center = useMemo(() => {
+  const bounds = useMemo(() => {
     if (filteredRides.length === 0) {
-      return PDX_COORDS;
+      const PDX_COORDS = [45.5051, -122.675] as LatLngTuple;
+      return [PDX_COORDS];
     }
 
-    return selectedRide === null ? getAverageLatLng(filteredRides) : getAverageLatLng([selectedRide]);
-  }, [selectedRide, filteredRides]);
+    return selectedRide ? selectedRide.map : filteredRides.flatMap(ride => ride.map);
+  }, [filteredRides, selectedRide]);
 
   return (
     <Card className="map">
-      <MapContainer center={center} zoom={10.5} scrollWheelZoom={false}>
-        <ChangeMapView center={center} />
+      <MapContainer scrollWheelZoom={false}>
+        <ChangeMapView bounds={bounds} />
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -59,5 +51,15 @@ function Map(props: MapProps) {
     </Card>
   );
 }
+
+const ChangeMapView = ({ bounds }: { bounds: LatLngBoundsExpression}) => {
+  const map = useMap();
+
+  useEffect(() => {
+    map.fitBounds(bounds);
+  }, [bounds, map]);
+
+  return null;
+};
 
 export default Map;
