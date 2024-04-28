@@ -47,7 +47,7 @@ const reauthorizeStrava = async () => {
 const fetchCyclingActivities = async (accessToken) => {
   let activities = [];
   let page = 1;
-  const pageLimit = 1;
+  const pageLimit = 50;
   const perPage = 100;
 
   while (page <= pageLimit) {
@@ -90,6 +90,7 @@ const fetchCyclingActivities = async (accessToken) => {
   );
 
   return longRides.map((activity) => ({
+    id: activity.id,
     title: activity.name,
     duration: activity.moving_time,
     miles: metersToMiles(activity.distance),
@@ -141,7 +142,7 @@ const seedStravaData = async () => {
   console.log("Fetching cycling activities...");
   const activities = await fetchCyclingActivities(accessToken);
   fs.writeFileSync(
-    "./src/components/consts/strava-22.json",
+    "./src/components/consts/strava-rides.json",
     JSON.stringify(activities, null, 2)
   );
 };

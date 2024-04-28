@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import RideList, { RideData } from "./components/RideList";
-import RIDES from "./components/consts/strava.json";
+import RIDES from "./components/consts/strava-rides.json";
 
 function App() {
   const [rides, setRides] = useState<RideData[]>([]);
