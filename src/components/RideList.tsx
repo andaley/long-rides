@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { ArrowUpFromDot } from "lucide-react";
 import Ride from "./Ride";
 import RideListHeader from "./RideListHeader";
 import "./RideList.css";
@@ -24,7 +25,7 @@ const RideList = (props: RideListProps) => {
   const [selectedSortBy, setSelectedSortBy] = useState<SortByProperty>("date");
   const [sortOrder, setSortOrder] = useState<string>("descending");
   const [selectedRide, setSelectedRide] = useState<RideData | null>(null);
-  
+
   const { rides } = props;
 
   const filteredAndSortedRides = useMemo(() => {
@@ -46,9 +47,7 @@ const RideList = (props: RideListProps) => {
   }, [rides, selectedYear, selectedSortBy, sortOrder]);
 
   const filterOptions = (() => {
-    const uniqueYears = new Set(
-      rides.map((ride) => ride.date.slice(0, 4))
-    );
+    const uniqueYears = new Set(rides.map((ride) => ride.date.slice(0, 4)));
     return ["all", ...uniqueYears];
   })();
 
@@ -64,7 +63,12 @@ const RideList = (props: RideListProps) => {
   };
 
   const rideList = filteredAndSortedRides.map((ride) => (
-    <Ride key={ride.id} ride={ride} onClick={handleSelectRide} isSelected={ride.id === selectedRide?.id} />
+    <Ride
+      key={ride.id}
+      ride={ride}
+      onClick={handleSelectRide}
+      isSelected={ride.id === selectedRide?.id}
+    />
   ));
 
   return (
@@ -80,6 +84,14 @@ const RideList = (props: RideListProps) => {
         onSortOrder={setSortOrder}
       />
       <div className="rideContainer">{rideList}</div>
+      {rideList.length > 8 && (
+        <button
+          className="scrollToTop"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
+          Back to top <ArrowUpFromDot />
+        </button>
+      )}
     </>
   );
 };
