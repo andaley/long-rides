@@ -5,6 +5,7 @@ import RideListHeader from "./RideListHeader";
 import "./RideList.css";
 import Map from "./Map";
 import type { SortByProperty } from "./consts/consts";
+import Stats from "./Stats";
 
 export type RideData = {
   id: number;
@@ -83,6 +84,7 @@ const RideList = (props: RideListProps) => {
         sortOrder={sortOrder}
         onSortOrder={setSortOrder}
       />
+      <Stats rides={filteredAndSortedRides} />
       <div className="rideContainer">{rideList}</div>
       {rideList.length > 8 && (
         <button
