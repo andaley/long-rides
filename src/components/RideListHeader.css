@@ -2,16 +2,23 @@
   display: flex;
   justify-content: space-between;
   margin: 24px 0px;
-  }
-  
-  .rideListHeader select {
-    padding: 2px;
-  }
-  
-  .sortBy select {
-    margin-left: 4px;
-  }
-  
-  .sortBy label {
-    margin-left: 8px;
+}
+
+.rideListHeader select {
+  padding: 2px;
+}
+.sortBy {
+  display: flex;
+  align-items: center;
+}
+
+#sortSelect {
+  margin-right: 8px;
+}
+.sortBy select {
+  margin-left: 4px;
+}
+
+.sortBy label {
+  margin-left: 8px;
 }

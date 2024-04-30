@@ -1,3 +1,5 @@
+import { useCallback } from "react";
+import { ChevronUp, ChevronDown } from "lucide-react";
 import "./RideListHeader.css";
 import { SortByProperty } from "./consts/consts";
 
@@ -20,38 +22,63 @@ const RideListHeader = (props: RideListHeaderProps) => {
     props.onSortBy(event.target.value as SortByProperty);
   };
 
-  const handleSortOrder = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    props.onSortOrder(event.target.value);
-  };
+  const handleSortOrder = useCallback(
+    (val: "ascending" | "descending") => {
+      props.onSortOrder(val);
+    },
+    [props]
+  );
 
   const filterOptions = props.filterOptions.map((option) => (
     <option key={option} value={option}>
       {option}
     </option>
   ));
- 
+
   return (
     <>
       <div className="rideListHeader">
         <div className="filterBy">
-          <label>Year: </label>
-          <select value={props.selected} onChange={handleFilter}>
+          <label htmlFor="yearSelect">Year: </label>
+          <select
+            id="yearSelect"
+            value={props.selected}
+            onChange={handleFilter}
+          >
             {filterOptions}
           </select>
         </div>
         <div className="sortBy">
-          <label>Sort: </label>
-          <select value={props.sortBy} onChange={handleSortBy}>
+          <label htmlFor="sortSelect">Sort: </label>
+          <select id="sortSelect" value={props.sortBy} onChange={handleSortBy}>
             <option value="date">Date</option>
             <option value="duration">Duration</option>
             <option value="miles">Miles</option>
             <option value="elevation">Elevation</option>
           </select>
-          <label>Order:</label>
-          <select value={props.sortOrder} onChange={handleSortOrder}>
-            <option value="ascending">ascending</option>
-            <option value="descending">descending</option>
-          </select>
+          {props.sortOrder === "ascending" ? (
+            <ChevronUp
+              onClick={() => handleSortOrder("descending")}
+              role="button"
+              aria-label="sort rides in descending order"
+              tabIndex={0}
+              onKeyDown={(e) =>
+                (e.key === "Enter" || e.key === "ArrowDown") &&
+                handleSortOrder("descending")
+              }
+            />
+          ) : (
+            <ChevronDown
+              onClick={() => handleSortOrder("ascending")}
+              role="button"
+              aria-label="sort rides in ascending order"
+              tabIndex={0}
+              onKeyDown={(e) =>
+                (e.key === "Enter" || e.key === "ArrowUp") &&
+                handleSortOrder("ascending")
+              }
+            />
+          )}
         </div>
       </div>
     </>
