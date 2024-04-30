@@ -23,7 +23,6 @@ function Ride(props: RideProps) {
   const formattedDate = new Date(date).toLocaleDateString("default", { month: "short", day: "numeric", year: "numeric" });
 
   const handleClick = () => {
-    console.log("Ride clicked", props.ride);
     props.onClick(props.ride);
   };
 

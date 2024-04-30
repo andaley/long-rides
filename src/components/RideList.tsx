@@ -57,8 +57,14 @@ const RideList = (props: RideListProps) => {
     setSelectedRide(null);
   };
 
+  const handleSelectRide = (ride: RideData) => {
+    // if the ride is already selected, deselect it
+    // otherwise, select it
+    setSelectedRide(selectedRide && selectedRide.id === ride.id ? null : ride);
+  };
+
   const rideList = filteredAndSortedRides.map((ride) => (
-    <Ride key={ride.id} ride={ride} onClick={setSelectedRide} isSelected={ride.id === selectedRide?.id} />
+    <Ride key={ride.id} ride={ride} onClick={handleSelectRide} isSelected={ride.id === selectedRide?.id} />
   ));
 
   return (
