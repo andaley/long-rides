@@ -35,24 +35,28 @@ function Map(props: MapProps) {
       return [PDX_COORDS];
     }
 
-    return selectedRide ? selectedRide.map : filteredRides.flatMap(ride => ride.map);
+    return selectedRide
+      ? selectedRide.map
+      : filteredRides.flatMap((ride) => ride.map);
   }, [filteredRides, selectedRide]);
 
   return (
-    <Card className="map">
-      <MapContainer scrollWheelZoom={false}>
-        <ChangeMapView bounds={bounds} />
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        {polylines}
-      </MapContainer>
-    </Card>
+    <section>
+      <Card className="map">
+        <MapContainer scrollWheelZoom={false} aria-label="Interactive map showing bike ride routes">
+          <ChangeMapView bounds={bounds} />
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          {polylines}
+        </MapContainer>
+      </Card>
+    </section>
   );
 }
 
-const ChangeMapView = ({ bounds }: { bounds: LatLngBoundsExpression}) => {
+const ChangeMapView = ({ bounds }: { bounds: LatLngBoundsExpression }) => {
   const map = useMap();
 
   useEffect(() => {

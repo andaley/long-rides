@@ -11,11 +11,14 @@ function App() {
     setRides(RIDES);
   }, []);
 
-
   return (
     <>
-      <h1>Long Rides 🚲</h1>
-      <RideList rides={rides} />
+      <header>
+        <h1>Long Rides 🚲</h1>
+      </header>
+      <main>
+        <RideList rides={rides} />
+      </main>
       <Footer />
     </>
   );
