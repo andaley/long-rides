@@ -1,6 +1,9 @@
+import ThemePicker from "@/components/ThemePicker";
+
 const Footer = () => {
   return (
     <footer>
+      <ThemePicker />
       <p className="copyright">
         Made by{" "}
         <a
