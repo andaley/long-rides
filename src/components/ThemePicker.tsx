@@ -33,7 +33,7 @@ export function ThemePicker() {
         </Label>
         <Label
           htmlFor="dark"
-          className={selectedTheme === 'dark' ? 'flex items-center justify-center cursor-pointer px-4 py-2 bg-gray-300' : 'flex items-center justify-center cursor-pointer px-4 py-2'}
+          className={selectedTheme === 'dark' ? 'flex items-center justify-center cursor-pointer px-4 py-2 bg-gray-700' : 'flex items-center justify-center cursor-pointer px-4 py-2'}
         >
           <RadioGroupItem
             value="dark"
@@ -46,7 +46,7 @@ export function ThemePicker() {
         </Label>
         <Label
           htmlFor="system"
-          className={selectedTheme === 'system' ? 'flex items-center justify-center cursor-pointer px-4 py-2 bg-gray-300' : 'flex items-center justify-center cursor-pointer px-4 py-2'}
+          className={selectedTheme === 'system' ? 'flex items-center justify-center cursor-pointer px-4 py-2 bg-gray-700' : 'flex items-center justify-center cursor-pointer px-4 py-2'}
         >
           <RadioGroupItem
             value="system"
