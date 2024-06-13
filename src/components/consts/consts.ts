@@ -1,4 +1,9 @@
-export type SortByProperty = "date" | "duration" | "miles" | "elevation";
+export type SortByProperty =
+  | "date"
+  | "duration"
+  | "miles"
+  | "elevation"
+  | "title";
 export type SortOpts = "ascending" | "descending";
 
 export const TRIPS = [

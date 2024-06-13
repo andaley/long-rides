@@ -40,6 +40,10 @@ const RideList = (props: RideListProps) => {
         return sortOrder === "descending"
           ? b.date.localeCompare(a.date)
           : a.date.localeCompare(b.date);
+      } else if (selectedSortBy === "title") {
+        return sortOrder === "descending"
+          ? (b["title"] > a["title"] ? -1 : 1)
+          : (a["title"] > b["title"] ? -1 : 1);
       } else {
         return sortOrder === "descending"
           ? b[selectedSortBy] - a[selectedSortBy]
@@ -99,7 +103,15 @@ const RideList = (props: RideListProps) => {
                 selectedSortBy={selectedSortBy}
               />
             </th>
-            <th>Ride</th>
+            <th>
+              Ride{" "}
+              <SortChevron
+                sortBy="title"
+                sortOrder={sortOrder}
+                onSortOrder={handleSort}
+                selectedSortBy={selectedSortBy}
+              />
+            </th>
             <th>
               Duration
               <SortChevron
