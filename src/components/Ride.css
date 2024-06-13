@@ -1,6 +1,5 @@
 .ride {
   transition: transform 0.3s ease;
-  color: #1A1C18;
 }
 
 .ride--selected {

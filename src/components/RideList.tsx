@@ -4,8 +4,9 @@ import Ride from "./Ride";
 import RideListHeader from "./RideListHeader";
 import "./RideList.css";
 import Map from "./Map";
-import type { SortByProperty } from "./consts/consts";
 import Stats from "./Stats";
+import SortChevron from "./SortChevron";
+import type { SortByProperty, SortOpts } from "./consts/consts";
 
 export type RideData = {
   id: number;
@@ -24,7 +25,7 @@ type RideListProps = {
 const RideList = (props: RideListProps) => {
   const [selectedYear, setSelectedYear] = useState<string>("all");
   const [selectedSortBy, setSelectedSortBy] = useState<SortByProperty>("date");
-  const [sortOrder, setSortOrder] = useState<string>("descending");
+  const [sortOrder, setSortOrder] = useState<SortOpts>("descending");
   const [selectedRide, setSelectedRide] = useState<RideData | null>(null);
 
   const { rides } = props;
@@ -57,6 +58,11 @@ const RideList = (props: RideListProps) => {
     setSelectedRide(null);
   };
 
+  const handleSort = (sortBy: SortByProperty, sortOrder: SortOpts) => {
+    setSelectedSortBy(sortBy);
+    setSortOrder(sortOrder);
+  };
+
   const handleSelectRide = (ride: RideData) => {
     // if the ride is already selected, deselect it
     // otherwise, select it
@@ -75,17 +81,56 @@ const RideList = (props: RideListProps) => {
   return (
     <>
       <Map selectedRide={selectedRide} filteredRides={filteredAndSortedRides} />
+      <Stats rides={filteredAndSortedRides} />
       <RideListHeader
         filterOptions={filterOptions}
         selected={selectedYear}
         onSelectFilter={handleSelectFilter}
-        sortBy={selectedSortBy}
-        onSortBy={setSelectedSortBy}
-        sortOrder={sortOrder}
-        onSortOrder={setSortOrder}
       />
-      <Stats rides={filteredAndSortedRides} />
-      <div className="rideContainer">{rideList}</div>
+      <table className="rideContainer">
+        <thead>
+          <tr>
+            <th>
+              Date{" "}
+              <SortChevron
+                sortBy="date"
+                sortOrder={sortOrder}
+                onSortOrder={handleSort}
+                selectedSortBy={selectedSortBy}
+              />
+            </th>
+            <th>Ride</th>
+            <th>
+              Duration
+              <SortChevron
+                sortBy="duration"
+                sortOrder={sortOrder}
+                onSortOrder={handleSort}
+                selectedSortBy={selectedSortBy}
+              />
+            </th>
+            <th>
+              Miles
+              <SortChevron
+                sortBy="miles"
+                sortOrder={sortOrder}
+                onSortOrder={handleSort}
+                selectedSortBy={selectedSortBy}
+              />
+            </th>
+            <th>
+              Elevation
+              <SortChevron
+                sortBy="elevation"
+                sortOrder={sortOrder}
+                onSortOrder={handleSort}
+                selectedSortBy={selectedSortBy}
+              />
+            </th>
+          </tr>
+        </thead>
+        <tbody>{rideList}</tbody>
+      </table>
       {rideList.length > 8 && (
         <button
           className="scrollToTop"

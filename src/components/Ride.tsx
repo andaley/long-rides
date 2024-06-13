@@ -1,5 +1,4 @@
 import "./Ride.css";
-import Card from "./Card";
 import type { RideData } from "./RideList";
 
 type RideProps = {
@@ -20,21 +19,27 @@ function Ride(props: RideProps) {
 
   const roundedElevation = Math.round(elevation);
 
-  const formattedDate = new Date(date).toLocaleDateString("default", { month: "short", day: "numeric", year: "numeric" });
+  const formattedDate = new Date(date).toLocaleDateString("default", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
 
   const handleClick = () => {
     props.onClick(props.ride);
   };
 
-
   return (
-      <Card className={props.isSelected ? "ride--selected" : "ride"} onClick={handleClick}>
-        <div>{formattedDate}</div>
-        <h2>{title}</h2>
-        <div>Duration: {durationHoursAndMinutes}</div>
-        <div>Miles: {roundedMiles}</div>
-        <div>Elevation: {roundedElevation}</div>
-      </Card>
+    <tr
+      className={props.isSelected ? "ride--selected" : "ride"}
+      onClick={handleClick}
+    >
+      <td>{formattedDate}</td>
+      <td>{title}</td>
+      <td>{durationHoursAndMinutes}</td>
+      <td>{roundedMiles}</td>
+      <td>{roundedElevation}</td>
+    </tr>
   );
 }
 
