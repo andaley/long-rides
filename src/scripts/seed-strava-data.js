@@ -5,43 +5,27 @@ import polyline from "@mapbox/polyline";
 import dotenv from "dotenv";
 dotenv.config();
 
-// Fetch cycling activities from Strava API, then store them statically in the app in components/consts/consts.ts
+// Fetch cycling activities from Strava API, then store them statically in the app in components/consts/strava-rides.json
+
 const authenticateWithStrava = async (accessToken) => {
   const { VITE_STRAVA_CLIENT_ID, VITE_STRAVA_CLIENT_SECRET } = process.env;
 
   console.log("Getting access token...");
-  const response = await axios.post("https://www.strava.com/oauth/token", {
-    client_id: VITE_STRAVA_CLIENT_ID,
-    client_secret: VITE_STRAVA_CLIENT_SECRET,
-    code: accessToken,
-    grant_type: "authorization_code",
-  });
-  if (response.status !== 200) {
-    console.error("response status: ");
-    throw new Error("Failed to authenticate with Strava");
+  try {
+    const response = await axios.post("https://www.strava.com/oauth/token", {
+      client_id: VITE_STRAVA_CLIENT_ID,
+      client_secret: VITE_STRAVA_CLIENT_SECRET,
+      code: accessToken,
+      grant_type: "authorization_code",
+    });
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Failed to authenticate with Strava: ",
+      error.response?.data || error.message
+    );
+    process.exit(1);
   }
-  return response.data;
-};
-
-const reauthorizeStrava = async () => {
-  const {
-    VITE_STRAVA_CLIENT_ID,
-    VITE_STRAVA_CLIENT_SECRET,
-    VITE_STRAVA_REFRESH_TOKEN,
-  } = process.env;
-
-  console.log("Refreshing access token...");
-  const response = await axios.post("https://www.strava.com/oauth/token", {
-    client_id: VITE_STRAVA_CLIENT_ID,
-    client_secret: VITE_STRAVA_CLIENT_SECRET,
-    refresh_token: VITE_STRAVA_REFRESH_TOKEN,
-    grant_type: "refresh_token",
-  });
-  if (response.status !== 200) {
-    console.error("response status: ", response.status);
-    throw new Error("Failed to reauthenticate with Strava");
-  }
-  return response.data;
 };
 
 const fetchCyclingActivities = async (accessToken) => {
@@ -59,25 +43,29 @@ const fetchCyclingActivities = async (accessToken) => {
         pageLimit * perPage
       } cycling activities...`
     );
-    const response = await axios.get(
-      `https://www.strava.com/api/v3/athlete/activities?page=${page}&per_page=${perPage}`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
+    try {
+      const response = await axios.get(
+        `https://www.strava.com/api/v3/athlete/activities?page=${page}&per_page=${perPage}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      const { data } = response;
+      if (data.length === 0) {
+        break;
       }
-    );
-    if (response.status !== 200) {
+      activities = activities.concat(data);
+      page++;
+    } catch (error) {
       throw new Error(
-        `Failed to fetch cycling activities; status code: ${response.status}`
+        `Failed to fetch cycling activities: ${
+          error.response ? error.response.status : error.message
+        }`
       );
     }
-    const data = await response.data;
-    if (data.length === 0) {
-      break;
-    }
-    activities = activities.concat(data);
-    page++;
   }
 
   const longRides = activities.filter(
@@ -104,40 +92,39 @@ const metersToMiles = (meters) => {
   return Math.round(meters * 0.000621371 * 100) / 100;
 };
 
-const seedStravaData = async () => {
-  const {
-    VITE_STRAVA_CLIENT_ID,
-    VITE_STRAVA_REDIRECT_URI,
-    VITE_STRAVA_REFRESH_TOKEN,
-  } = process.env;
-  let authCode = process.env.STRAVA_CODE;
-
-  if (!authCode) {
-    const oAuthUrl = `https://www.strava.com/oauth/authorize?client_id=${VITE_STRAVA_CLIENT_ID}&redirect_uri=${VITE_STRAVA_REDIRECT_URI}&response_type=code&approval_prompt=force&scope=activity:read_all`;
-
-    console.log("Please visit this URL to authorize with Strava: ", oAuthUrl);
+const getAuthCode = () => {
+  return new Promise((resolve) => {
     const rl = readline.createInterface({
       input: process.stdin,
       output: process.stdout,
     });
 
     rl.question("Enter auth code from Strava: ", async (code) => {
-      // append code to end of .env file
-      fs.appendFileSync("./.env", `\nSTRAVA_CODE=${code}\n`);
       rl.close();
+      resolve(code);
     });
+  });
+};
+
+(async () => {
+  const { VITE_STRAVA_CLIENT_ID, VITE_STRAVA_REDIRECT_URI } = process.env;
+  let authCode = process.env.VITE_STRAVA_CODE;
+
+  if (!authCode) {
+    const oAuthUrl = `https://www.strava.com/oauth/authorize?client_id=${VITE_STRAVA_CLIENT_ID}&redirect_uri=${VITE_STRAVA_REDIRECT_URI}&response_type=code&approval_prompt=force&scope=activity:read_all`;
+
+    console.log("No Strava authorization code found.");
+    console.log("Please visit this URL to authorize with Strava:");
+    console.log(oAuthUrl);
+
+    authCode = await getAuthCode();
+    // append code to end of .env file
+    fs.appendFileSync("./.env", `\nVITE_STRAVA_CODE=${authCode}\n`);
   }
 
   console.log("Authorizing with Strava...");
-  // if refresh token exists, use it to re-authenticate
-  let accessToken;
-  if (VITE_STRAVA_REFRESH_TOKEN) {
-    const res = await reauthorizeStrava();
-    accessToken = res.access_token;
-  } else {
-    const res = await authenticateWithStrava(process.env.STRAVA_CODE);
-    accessToken = res.access_token;
-  }
+  const res = await authenticateWithStrava(authCode);
+  const accessToken = res.access_token;
 
   console.log("Fetching cycling activities...");
   const activities = await fetchCyclingActivities(accessToken);
@@ -145,6 +132,4 @@ const seedStravaData = async () => {
     "./src/components/consts/strava-rides.json",
     JSON.stringify(activities, null, 2)
   );
-};
-
-seedStravaData();
+})();
