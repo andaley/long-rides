@@ -1,7 +1,7 @@
 const Footer = () => {
   return (
     <footer>
-      <p className="copyright">
+      <p>
         Made by{" "}
         <a
           href="https://adriannedaley.com/"

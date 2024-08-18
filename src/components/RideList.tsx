@@ -1,5 +1,4 @@
 import { useState, useMemo } from "react";
-import { ArrowUpFromDot } from "lucide-react";
 import Ride from "./Ride";
 import RideListHeader from "./RideListHeader";
 import "./RideList.css";
