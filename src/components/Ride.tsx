@@ -28,13 +28,18 @@ function Ride(props: RideProps) {
 
 
   return (
-      <Card className={props.isSelected ? "ride--selected" : "ride"} onClick={handleClick}>
-        <div>{formattedDate}</div>
+    <Card
+      className={props.isSelected ? "ride--selected" : "ride"}
+      onClick={handleClick}
+    >
+      <div className="rideHeader">
         <h2>{title}</h2>
-        <div>Duration: {durationHoursAndMinutes}</div>
-        <div>Miles: {roundedMiles}</div>
-        <div>Elevation: {roundedElevation}</div>
-      </Card>
+        <p className="date">{formattedDate}</p>
+      </div>
+      <div>Duration: {durationHoursAndMinutes}</div>
+      <div>Miles: {roundedMiles}</div>
+      <div>Elevation: {roundedElevation} ft.</div>
+    </Card>
   );
 }
 

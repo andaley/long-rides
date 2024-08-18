@@ -1,9 +1,35 @@
 .ride {
   transition: transform 0.3s ease;
-  color: #1A1C18;
 }
 
-.ride--selected {
-  transform: scale(1.1);
+.ride:hover {
+  transform: scale(1.05);
   transition: transform 0.3s ease;
+    box-shadow: 0 2px 4px var(--primary-200);
+    border: 2px solid var(--primary-200);
+}
+
+.card.ride--selected {
+  box-shadow: 0 2px 4px var(--primary-500);
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+  border: 3px solid var(--primary-500);
+
+}
+
+.rideHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rideHeader .date {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--secondary-700);
+  margin: 0;
+}
+
+.rideHeader h2 {
+  margin: 0;
 }
