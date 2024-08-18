@@ -1,7 +1,7 @@
 .rideListHeader {
   display: flex;
   justify-content: space-between;
-  margin: 24px 0px;
+  margin: 0 0 24px;
 }
 
 .rideListHeader select {

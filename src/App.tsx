@@ -12,7 +12,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <div className="appContainer">
       <header>
         <h1>Long Rides 🚲</h1>
       </header>
@@ -20,7 +20,7 @@ function App() {
         <RideList rides={rides} />
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
 

@@ -4,3 +4,28 @@
   margin: 0 auto;
   padding: 2rem;
 }
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header,
+main {
+  flex: 1;
+}
+
+footer {
+  flex-shrink: 0;
+}
+
+footer p {
+  text-align: center;
+  margin: 0;
+}

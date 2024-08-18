@@ -41,18 +41,19 @@ function Map(props: MapProps) {
   }, [filteredRides, selectedRide]);
 
   return (
-    <section>
-      <Card className="map">
-        <MapContainer scrollWheelZoom={false} aria-label="Interactive map showing bike ride routes">
-          <ChangeMapView bounds={bounds} />
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          {polylines}
-        </MapContainer>
-      </Card>
-    </section>
+    <Card className="map">
+      <MapContainer
+        scrollWheelZoom={false}
+        aria-label="Interactive map showing bike ride routes"
+      >
+        <ChangeMapView bounds={bounds} />
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        {polylines}
+      </MapContainer>
+    </Card>
   );
 }
 

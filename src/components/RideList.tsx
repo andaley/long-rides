@@ -73,28 +73,27 @@ const RideList = (props: RideListProps) => {
   ));
 
   return (
-    <>
-      <Map selectedRide={selectedRide} filteredRides={filteredAndSortedRides} />
-      <RideListHeader
-        filterOptions={filterOptions}
-        selected={selectedYear}
-        onSelectFilter={handleSelectFilter}
-        sortBy={selectedSortBy}
-        onSortBy={setSelectedSortBy}
-        sortOrder={sortOrder}
-        onSortOrder={setSortOrder}
-      />
-      <Stats rides={filteredAndSortedRides} />
-      <div className="rideContainer">{rideList}</div>
-      {rideList.length > 8 && (
-        <button
-          className="scrollToTop"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        >
-          Back to top <ArrowUpFromDot />
-        </button>
-      )}
-    </>
+    <div className="mainContent">
+      <section>
+        <RideListHeader
+          filterOptions={filterOptions}
+          selected={selectedYear}
+          onSelectFilter={handleSelectFilter}
+          sortBy={selectedSortBy}
+          onSortBy={setSelectedSortBy}
+          sortOrder={sortOrder}
+          onSortOrder={setSortOrder}
+        />
+        <div className="rideContainer">{rideList}</div>
+      </section>
+      <section>
+        <Map
+          selectedRide={selectedRide}
+          filteredRides={filteredAndSortedRides}
+        />
+        <Stats rides={filteredAndSortedRides} />
+      </section>
+    </div>
   );
 };
 
