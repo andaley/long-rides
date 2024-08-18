@@ -90,7 +90,7 @@ const RideList = (props: RideListProps) => {
           selectedRide={selectedRide}
           filteredRides={filteredAndSortedRides}
         />
-        <Stats rides={filteredAndSortedRides} />
+        <Stats rides={filteredAndSortedRides} selectedYear={selectedYear} />
       </section>
     </div>
   );
