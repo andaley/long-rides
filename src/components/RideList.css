@@ -1,12 +1,13 @@
 .mainContent {
   display: grid;
   grid-template-columns: 1fr 3fr;
-    column-gap: 36px;
+  column-gap: 36px;
 }
 .rideContainer {
+  padding: 16px;
   display: flex;
   flex-direction: column;
-    gap: 36px;
-    height: 80vh;
-    overflow: scroll;
+  gap: 36px;
+  height: 80vh;
+  overflow: scroll;
 }
