@@ -68,6 +68,7 @@ const RideList = (props: RideListProps) => {
       ride={ride}
       onClick={handleSelectRide}
       isSelected={ride.id === selectedRide?.id}
+      sortBy={selectedSortBy}
     />
   ));
 

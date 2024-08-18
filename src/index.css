@@ -157,6 +157,7 @@ h1 {
 
 h1, h2, h3 {
   color: var(--secondary-700);
+  letter-spacing: -0.05em;
 }
 
 header {
