@@ -1,14 +1,7 @@
 .card {
   padding: 20px;
-  background-color: #242424;
-  border: 1px solid #d0cfcd;
+  background-color: var(--secondary-300);
+  border: 1px solid var(--secondary-200);
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  color: rgba(255, 255, 255, 0.87);
-}
-
-@media (prefers-color-scheme: light) {
-  .card {
-    background-color: #dddeda;
-  }
 }
