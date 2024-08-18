@@ -14,7 +14,7 @@ function App() {
   return (
     <div className="appContainer">
       <header>
-        <h1>Long Rides 🚲</h1>
+        <h1>Long Rides</h1>
       </header>
       <main>
         <RideList rides={rides} />
