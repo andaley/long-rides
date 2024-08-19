@@ -1,5 +1,4 @@
 import "./Ride.css";
-import Card from "./Card";
 import type { RideData } from "./RideList";
 import type { SortByProperty } from "./consts/consts";
 
@@ -40,8 +39,8 @@ function Ride(props: RideProps) {
   };
 
   return (
-    <Card
-      className={props.isSelected ? "ride--selected" : "ride"}
+    <button
+      className={props.isSelected ? "card ride selected" : "card ride"}
       onClick={handleClick}
     >
       <div className="rideHeader">
@@ -76,7 +75,7 @@ function Ride(props: RideProps) {
           <p className="sortByStatValue">{formattedProps[props.sortBy]}</p>
         </div>
       </div>
-    </Card>
+    </button>
   );
 }
 
