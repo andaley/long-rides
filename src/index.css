@@ -76,7 +76,7 @@
     --text-900: #e6e8e3;
     --text-950: #f3f4f1;
 
-    --background-50: #0e0e0b;
+    --background-50: #333432;
     --background-100: #1d1b16;
     --background-200: #3a362c;
     --background-300: #565143;
@@ -144,10 +144,10 @@
 
 a {
   font-weight: 500;
-  color: var(--primary-500);
+  color: var(--primary-600);
 }
 a:hover {
-  color: var(--primary-400);
+  color: var(--primary-500);
 }
 
 h1 {
