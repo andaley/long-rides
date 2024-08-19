@@ -73,7 +73,7 @@ const RideList = (props: RideListProps) => {
   ));
 
   return (
-    <div className="mainContent">
+    <>
       <section>
         <RideListHeader
           filterOptions={filterOptions}
@@ -93,7 +93,7 @@ const RideList = (props: RideListProps) => {
         />
         <Stats rides={filteredAndSortedRides} selectedYear={selectedYear} />
       </section>
-    </div>
+    </>
   );
 };
 
