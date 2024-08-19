@@ -1,20 +1,22 @@
 .ride {
   transition: transform 0.3s ease;
+  cursor: pointer;
 }
 
 .ride:hover {
   transform: scale(1.05);
   transition: transform 0.3s ease;
-    box-shadow: 0 2px 4px var(--primary-200);
-    border: 2px solid var(--primary-200);
+  box-shadow: 0 1px 2px var(--primary-700);
+  outline: 1px solid var(--primary-600);
 }
 
 .card.ride--selected {
-  box-shadow: 0 2px 4px var(--primary-500);
   transform: scale(1.05);
   transition: transform 0.3s ease;
-  border: 3px solid var(--primary-500);
-
+  box-shadow: 0 1px 2px var(--primary-500);
+  outline: 3px solid var(--primary-400);
+  cursor: pointer;
+  
 }
 
 .rideHeader {
@@ -26,7 +28,7 @@
 .statLabel {
   font-size: 0.8rem;
   font-style: italic;
-  color: var(--secondary-700);
+  color: var(--secondary-800);
   margin: 0;
 }
 
@@ -52,7 +54,7 @@
 .sortByStatLabel {
   font-size: 0.8rem;
   font-style: italic;
-  color: var(--secondary-700);
+  color: var(--secondary-800);
   margin: 0;
 }
 
