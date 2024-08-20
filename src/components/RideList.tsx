@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Ride from "./Ride";
 import RideListHeader from "./RideListHeader";
 import "./RideList.css";
@@ -61,6 +61,33 @@ const RideList = (props: RideListProps) => {
     // otherwise, select it
     setSelectedRide(selectedRide && selectedRide.id === ride.id ? null : ride);
   };
+
+  // event listeners for closing the selected ride
+  useEffect(() => {
+    const handleEscapePress = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSelectedRide(null);
+      }
+    };
+
+    const handleDocumentClick = (event: MouseEvent) => {
+      if (
+        selectedRide &&
+        event.target instanceof HTMLElement &&
+        !event.target.closest(".ride.selected")
+      ) {
+        setSelectedRide(null);
+      }
+    };
+
+    document.addEventListener("keydown", handleEscapePress);
+    document.addEventListener("click", handleDocumentClick);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscapePress);
+      document.removeEventListener("click", handleDocumentClick);
+    };
+  }, [selectedRide]);
 
   const rideList = filteredAndSortedRides.map((ride) => (
     <Ride
