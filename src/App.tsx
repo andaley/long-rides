@@ -9,7 +9,7 @@ function App() {
   const [rides, setRides] = useState<RideData[]>([]);
 
   useEffect(() => {
-    setRides(RIDES);
+    setRides(RIDES as RideData[]);
   }, []);
 
   return (
