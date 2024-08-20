@@ -10,73 +10,76 @@ type RideProps = {
   sortBy: SortByProperty;
 };
 
-function Ride(props: RideProps) {
-  const { date, title, duration, miles, elevation } = props.ride;
+  const formatDate = (date: string) =>
+    new Date(date).toLocaleDateString("default", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  const formatDuration = (duration: number) =>
+    `${Math.floor(duration / 3600)}:${Math.floor((duration % 3600) / 60)}`;
+  const formatMiles = (miles: number) => `${Math.round(miles * 10) / 10} mi`;
+  const formatElevation = (elevation: number) => `${Math.round(elevation)} ft`;
 
-  const durationHoursAndMinutes = `${Math.floor(duration / 3600)}h ${Math.floor(
-    (duration % 3600) / 60
-  )}m`;
+  function Ride(props: RideProps) {
+    const { sortBy, isSelected, onClick, ride } = props;
+    const { date, title, duration, miles, elevation } = ride;
 
-  const roundedMiles = Math.round(miles * 10) / 10;
+    const formattedProps = {
+      date: formatDate(date),
+      duration: formatDuration(duration),
+      miles: formatMiles(miles),
+      elevation: formatElevation(elevation),
+    };
 
-  const roundedElevation = Math.round(elevation);
+    const handleClick = () => {
+      onClick(ride);
+    };
 
-  const formattedDate = new Date(date).toLocaleDateString("default", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-
-  const formattedProps = {
-    date: formattedDate,
-    duration: durationHoursAndMinutes,
-    miles: `${roundedMiles} mi`,
-    elevation: `${roundedElevation} ft.`,
-  };
-
-  const handleClick = () => {
-    props.onClick(props.ride);
-  };
-
-  return (
-    <button
-      className={props.isSelected ? "card ride selected" : "card ride"}
-      onClick={handleClick}
-    >
-      <div className="rideHeader">
-        <div className="rideStats">
-          <h2>{title}</h2>
-          {props.sortBy !== "date" && (
-            <p className="statLabel">{formattedDate}</p>
-          )}
-          <div className="rideStatsValues">
-            {props.sortBy !== "duration" && (
-              <div>
-                <span className="statLabel">Duration</span>{" "}
-                {durationHoursAndMinutes}
-              </div>
-            )}
-            {props.sortBy !== "miles" && (
-              <div>
-                <span className="statLabel">Distance</span>{" "}
-                {formattedProps["miles"]}
-              </div>
-            )}
-            {props.sortBy !== "elevation" && (
-              <div>
-                <span className="statLabel">Elevation</span>{" "}
-                {formattedProps["elevation"]}
-              </div>
-            )}
-          </div>
-        </div>
-        <div className="sortByStat">
-          <div className="sortByStatLabel">{props.sortBy}</div>
-          <p className="sortByStatValue">{formattedProps[props.sortBy]}</p>
-        </div>
+    const sortByMetric = () => (
+      <div className="sortByMetric">
+        {sortBy === "date" ? (
+          <p className="statLabel">{formattedProps.date}</p>
+        ) : (
+          <>
+            <div className="sortByMetricLabel">{sortBy}</div>
+            <p className="sortByMetricValue">{formattedProps[sortBy]}</p>
+          </>
+        )}
       </div>
-    </button>
-  );
-}
+    );
+
+    const renderMetric = (label: string, value: string) => (
+      <div>
+        <span className="statLabel">{label}</span>{" "}
+        <span className="statValue">{value}</span>
+      </div>
+    );
+
+    return (
+      <button
+        className={isSelected ? "card ride selected" : "card ride"}
+        onClick={handleClick}
+      >
+        <div className="rideHeader">
+          <div className="rideStats">
+            <h2>{title}</h2>
+            {sortBy !== "date" && (
+              <p className="statLabel">{formattedProps.date}</p>
+            )}
+            <div className="rideStatsValues">
+              {sortBy !== "duration" &&
+                renderMetric("Duration", formattedProps.duration)}
+              {sortBy !== "miles" &&
+                renderMetric("Miles", formattedProps.miles)}
+              {sortBy !== "elevation" &&
+                renderMetric("Elevation", formattedProps.elevation)}
+            </div>
+          </div>
+          {sortByMetric()}
+        </div>
+      </button>
+    );
+  }
 
 export default Ride;

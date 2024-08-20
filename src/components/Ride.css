@@ -18,15 +18,20 @@
 
 .rideHeader {
   display: flex;
-  justify-content: space-between;
-  gap: 20px;
 }
 
 .statLabel {
   font-size: 0.8rem;
   font-style: italic;
   color: var(--secondary-800);
-  margin: 0;
+  margin: 4px 0 0 0;
+}
+
+.statValue {
+  font-family: 'Courier Prime', 'Courier New', Courier, monospace;
+  font-weight: 900;
+  font-size: 1rem;
+  color: var(--primary-500);
 }
 
 .rideHeader h2 {
@@ -39,25 +44,25 @@
 }
 
 .rideStatsValues {
-  margin: 0.5rem 0 0 0;
+  margin: 16px 0 0 0;
 }
 
-.sortByStat {
+.sortByMetric {
   color: var(--primary-500);
   flex: 1;
   text-align: right;
 }
 
-.sortByStatLabel {
+.sortByMetricLabel {
   font-size: 0.8rem;
   font-style: italic;
   color: var(--secondary-800);
   margin: 0;
 }
 
-.sortByStatValue {
+.sortByMetricValue {
+  font-family: 'Courier Prime', 'Courier New', Courier, monospace;
   font-size: 1.2rem;
   font-weight: 900;
-  letter-spacing: -0.05em;
-  margin: 0;
+  margin: 4px 0 0 0;
 }
