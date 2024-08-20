@@ -2,6 +2,11 @@
 
 A simple app for tracking some of my longer bike rides. Built with React, TypeScript, Vite, React-Leaflet and the Strava API.
 
+
+https://longrides.netlify.app/
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5deb5411-0b03-41ff-af09-d8a9437ef039/deploy-status)](https://app.netlify.com/sites/longrides/deploys)
+
 ## Quick commands
 Start the app:
 `npm run dev`
@@ -26,7 +31,6 @@ Upon first run the script will prompt you to open a url to authenticate the appl
 
 ## TODO
 This app is mostly an excuse to familiarize myself with Vite, React-Leaflet, and the Strava API, so it's not meant to be full-featured. However, some tasks I'd like to add:
-- [ ] highlight route on map on ride hover 
-- [ ] style ride details
+- [ ] highlight ride card when hovering a route on the map
 - [ ] show more details on click
 - [ ] add tests
