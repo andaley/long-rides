@@ -5,64 +5,57 @@
 
 .ride:hover {
   transform: scale(1.05);
-  transition: transform 0.3s ease;
   outline: 1px solid var(--primary-600);
 }
 
 .card.ride.selected {
   transform: scale(1.05);
-  transition: transform 0.3s ease;
   box-shadow: 0 1px 2px var(--primary-500);
   outline: 3px solid var(--primary-400);
 }
 
-.rideHeader {
+.rideContainer {
   display: flex;
 }
 
-.statLabel {
+.metricLabel {
   font-size: 0.8rem;
   font-style: italic;
   color: var(--secondary-800);
   margin: 4px 0 0 0;
 }
 
-.statValue {
+.metricValue {
   font-family: 'Courier Prime', 'Courier New', Courier, monospace;
   font-weight: 900;
   font-size: 1rem;
   color: var(--primary-500);
 }
 
-.rideHeader h2 {
+.rideContainer h2 {
   margin: 0;
   line-height: 1.1;
 }
 
-.rideStats {
+.rideContainer--left {
   flex: 2;
 }
 
-.rideStatsValues {
+.rideMetrics {
   margin: 16px 0 0 0;
 }
 
-.sortByMetric {
+.rideContainer--right {
   color: var(--primary-500);
   flex: 1;
   text-align: right;
 }
 
-.sortByMetricLabel {
-  font-size: 0.8rem;
-  font-style: italic;
-  color: var(--secondary-800);
+.rideContainer--right .metricLabel {
   margin: 0;
 }
 
-.sortByMetricValue {
-  font-family: 'Courier Prime', 'Courier New', Courier, monospace;
+.rideContainer--right .metricValue {
   font-size: 1.2rem;
-  font-weight: 900;
   margin: 4px 0 0 0;
 }

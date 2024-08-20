@@ -36,38 +36,38 @@ type RideProps = {
       onClick(ride);
     };
 
-    const sortByMetric = () => (
-      <div className="sortByMetric">
-        {sortBy === "date" ? (
-          <p className="statLabel">{formattedProps.date}</p>
-        ) : (
+    const sortByMetric = () => {
+      if (sortBy === "date") {
+        return <p className="metricLabel">{formattedProps.date}</p>;
+      } else {
+        return (
           <>
-            <div className="sortByMetricLabel">{sortBy}</div>
-            <p className="sortByMetricValue">{formattedProps[sortBy]}</p>
+            <div className="metricLabel">{sortBy}</div>
+            <p className="metricValue">{formattedProps[sortBy]}</p>
           </>
-        )}
-      </div>
-    );
+        );
+      }
+    };
 
     const renderMetric = (label: string, value: string) => (
       <div>
-        <span className="statLabel">{label}</span>{" "}
-        <span className="statValue">{value}</span>
+        <span className="metricLabel">{label}</span>{" "}
+        <span className="metricValue">{value}</span>
       </div>
     );
 
     return (
       <button
-        className={isSelected ? "card ride selected" : "card ride"}
+        className={`card ride ${isSelected ? "selected" : ""}`}
         onClick={handleClick}
       >
-        <div className="rideHeader">
-          <div className="rideStats">
+        <div className="rideContainer">
+          <div className="rideContainer--left">
             <h2>{title}</h2>
             {sortBy !== "date" && (
-              <p className="statLabel">{formattedProps.date}</p>
+              <p className="metricLabel">{formattedProps.date}</p>
             )}
-            <div className="rideStatsValues">
+            <div className="rideMetrics">
               {sortBy !== "duration" &&
                 renderMetric("Duration", formattedProps.duration)}
               {sortBy !== "miles" &&
@@ -76,7 +76,7 @@ type RideProps = {
                 renderMetric("Elevation", formattedProps.elevation)}
             </div>
           </div>
-          {sortByMetric()}
+          <div className="rideContainer--right">{sortByMetric()}</div>
         </div>
       </button>
     );

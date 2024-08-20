@@ -84,7 +84,7 @@ const RideList = (props: RideListProps) => {
           sortOrder={sortOrder}
           onSortOrder={setSortOrder}
         />
-        <div className="rideContainer">{rideList}</div>
+        <div className="rideListContainer">{rideList}</div>
       </section>
       <section>
         <Map
